@@ -1,11 +1,15 @@
-function u = jacobi(u0,rhs,omega,N,nu1)
+function [U,res] = jacobi(U,rhs,omega,N,nu1)
 
-index = 2:N;
+res = zeros(N+1);
+ind = 2:N;
 h=1/N;
-tol=1e-8;
-while error>tol 
-    u1(index,index) = 0.25*(u0(index,index-1)+ u0(index-1,index) + ...
-                            u0(index,index+1)+ u0(index+1,index)+...
-                            h^2*rhs);
-                   error=norm()
+for smoothing=1:nu1
+    U(ind,ind) = 0.25*omega*( U(ind+1,ind) + U(ind-1,ind) +...
+                               U(ind,ind+1) + U(ind,ind-1) +...
+                               h^2.*rhs(ind,ind)) + (1 - omega)*U(ind,ind);                                        
+    Au = 1/h^2.*matvec(U,N);
+    error = norm(rhs(ind,ind) - Au(ind,ind));
+end   
+
+  res(ind,ind) = rhs(ind,ind) - Au(ind,ind);
 end

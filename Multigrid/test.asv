@@ -4,8 +4,8 @@ clear
 %Initial values
 
 grids =[10,20,50];
- for gr = 1:length(grids)
-    N = grids(gr);
+% for gr = 1:length(grids)
+    N = grids(3);
 %for L=5:9   
     
  %   N = 2^L;
@@ -27,21 +27,14 @@ grids =[10,20,50];
     U(:,end) = g(X(:,end),Y(:,end));
     U(1,:) = g(X(1,:)',Y(1,:)');
     U(end,:) = g(X(end,:)',Y(end,:)');
-    rnd = rand(N-1);
-    U(2:N,2:N) = rnd(1:end,1:end);
+     
     %Right Hand side
-    rhs = f(X,Y);
+    rhs = h^2*f(X,Y);
     %Implementing cg
     [U,res,iter]=my_cg(U,rhs,N,tol,maxit);
-    %surf(X,Y,U)
-    semilogy(res)
-    hold on
-    
-    
- end
-    grid on
-    legend('N = 10','N = 20','N = 50')
-    
+    mesh(U)
+    fprintf('Converged in %d iterations\n Residual:%e',iter,res)
+
 
 %     %% MGV
 %     f = @(x,y) -1; 
@@ -62,7 +55,7 @@ grids =[10,20,50];
 %     e =1.;
 %     it = 0;
 %     %Au0 = matvec(U,N);
-% %     [U,res,iter]=my_cg(U,rhs,N,tol,maxit);
+%     %[U,res,iter]=my_cg(U,rhs,N,tol,maxit);
 %     %surf(X,Y,U)
 %     %[U res] = jacobi(U,rhs,2/3,N,5);
 % 
@@ -97,7 +90,7 @@ grids =[10,20,50];
 %      t = sprintf('N = 2^%d',L);
 %      legend(t)
 %      get(legend(gca),'String'); 
-%     
+%      %legend('N = 10','N = 20','N = 50')
 %      
 % end
 %     %figure

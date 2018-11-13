@@ -1,4 +1,5 @@
 function  [x,i]= conj_grad(x0,A,b,tol)
+   
     r0 = b - A*x0;
     p0 = r0;
     error = 1; 

@@ -1,6 +1,6 @@
-function r2h = restriction(rh,N)
-    
-    n = N+1;
+function r2h = restriction(rh)
+   
+    n = length(rh);
     ind = 3:2:n-2;
     m = (n+1)/2;
     r2h = zeros(m,m);

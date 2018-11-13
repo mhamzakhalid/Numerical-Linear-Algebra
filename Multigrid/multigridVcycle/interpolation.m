@@ -1,6 +1,5 @@
-
-function eh = interpolation(e2h,N);
-            n = N+1;
+function eh = interpolation(e2h);
+            n = length(e2h);
             m = (n+1)/2;
             ind = 3:2:n-2;
             eh = zeros(n,n);
